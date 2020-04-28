@@ -1,5 +1,5 @@
 from flask import Blueprint, Flask, redirect, render_template, url_for
-from blog import app, db
+from blog import db
 from blog.models import User
 # from blog.users.forms import LoginForm, RegistrationForm
 

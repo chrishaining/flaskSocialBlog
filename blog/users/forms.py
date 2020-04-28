@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import  DataRequired, Email, EqualTo
 from wtforms import ValidationError
+from blog.models import User
 
 # create LoginForm
 class LoginForm(FlaskForm):
@@ -19,3 +20,14 @@ class RegistrationForm(FlaskForm):
     password = PasswordField('Password', validators = [DataRequired(), EqualTo('password_confirm', message = 'Passwords must match')])
     password_confirm = PasswordField('Confirm Password', validators = [DataRequired()])
     submit = SubmitField('Register')
+
+    # check that emails haven't already been used
+    def validate_email(self, field):
+        # Check if not None for that user email!
+        if User.query.filter_by(email=field.data).first():
+            raise ValidationError('Your email has been registered already!')
+
+    def validate_username(self, field):
+        # Check if not None for that username!
+        if User.query.filter_by(username=field.data).first():
+            raise ValidationError('Sorry, that username is taken!')

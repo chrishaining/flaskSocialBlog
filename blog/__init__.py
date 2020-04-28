@@ -2,14 +2,21 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
+from flask_debugtoolbar import DebugToolbarExtension
 
 app = Flask(__name__)
+
+# the toolbar is only enabled in debug mode:
+app.debug = True
 
 
 ###############
 ### CONFIGS ###
 ###############
 app.config['SECRET_KEY'] = 'mykey'
+
+# set up Debug sidebar
+toolbar = DebugToolbarExtension(app)
 
 ################################
 ##### SQL DATABASE SECTION #####
